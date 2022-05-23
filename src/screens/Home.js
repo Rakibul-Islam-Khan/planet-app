@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -13,60 +13,66 @@ import { colors } from "../theme/colors";
 import { Feather } from "@expo/vector-icons";
 import { spacing } from "../theme/spacing";
 import Text from "../components/text/text";
-import { EvilIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
+import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+
 
 export default function Home({ navigation }) {
-  const [search, setSearch] = React.useState("");
-  const plants = Planet_List.filter((planet) => { 
+  const [search, setSearch] = useState("");
+  const plants = Planet_List.filter((planet) => {
     return planet.name.toLowerCase().includes(search.toLowerCase());
   });
-return (
-  <SafeAreaView style={{ flex: 1, backgroundColor: colors.black }}>
-    <Header menu={true}/>
-    <View>
-      <View style={styles.searchIcon}>
-      <EvilIcons name="search" size={24} color="white" />
+  const Alert = () => {
+    alert("Hello");
+  };
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.black }}>
+      <Header menu={true} />
+      <View>
+        <View style={styles.searchIcon}>
+          <EvilIcons name="search" size={24} color="white" />
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Type the planet name"
+          placeholderTextColor={colors.grey}
+          onChangeText={(text) => setSearch(text)}
+        />
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Type the planet name"
-        placeholderTextColor={colors.grey}
-        onChangeText={(text) => setSearch(text)}
-      />
-    </View>
-    <FlatList
-      contentContainerStyle={styles.list}
-      keyExtractor={(item) => item.name}
-      data={plants}
-      renderItem={({ item }) => {
-        return (
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Details", { planet: item });
-            }}
-          >
-            <View style={styles.item}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <View
-                  style={[styles.circle, { backgroundColor: item.color }]}
-                />
-                <Text preset="h4" style={styles.itemName}>
-                  {item.name}
-                </Text>
+      <FlatList
+        contentContainerStyle={styles.list}
+        keyExtractor={(item) => item.name}
+        data={plants}
+        renderItem={({ item }) => {
+          return (
+            <Pressable
+              onPress={() => {
+                navigation.navigate("Details", { planet: item });
+              }}
+            >
+              <View style={styles.item}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={[styles.circle, { backgroundColor: item.color }]}
+                  />
+                  <Text preset="h4" style={styles.itemName}>
+                    {item.name}
+                  </Text>
+                </View>
+                <Feather name="chevron-right" size={20} color="white" />
               </View>
-              <Feather name="chevron-right" size={20} color="white" />
-            </View>
-          </Pressable>
-        );
-      }}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
-    />
-    <View style={styles.filter}>
-    <AntDesign name="filter" size={28} color="black" />
-    </View>
-  </SafeAreaView>
-);
+            </Pressable>
+          );
+        }}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
+      <View style={styles.filter}>
+        <Pressable onPress={Alert}>
+          <AntDesign name="filter" size={28} color="black" />
+        </Pressable>
+      </View>
+    </SafeAreaView>
+  );
 }
 const styles = StyleSheet.create({
   list: {
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginVertical: 10,
+    marginVertical: 20,
   },
   itemName: {
     marginLeft: 20,
@@ -117,5 +123,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: spacing[5],
     bottom: 10,
-  }
+  },
 });

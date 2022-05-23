@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/Home";
 import Text from "./src/components/text/text";
 import Details from "./src/screens/Details";
+import { colors } from "./src/theme/colors";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +27,7 @@ export default function App() {
           <Stack.Screen name="Details" component={Details} />
         </Stack.Navigator>
       </NavigationContainer>
-      <StatusBar barStyle="light-content" />
+      <StatusBar backgroundColor={colors.black} />
     </>
   );
 }
